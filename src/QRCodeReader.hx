@@ -69,7 +69,11 @@ class QRCodeReader extends Sprite
 
 	private var textArray:Array<String> = ["", "", ""];
 	
-	private var readCode:String = "";
+	private var appDir:File = File.applicationDirectory;
+	private var strageDir:File = File.applicationStorageDirectory;
+	
+	private var txtOriginal:String = "0";
+	private var txtCheck:String = "1";
 
 	public function new() 
 	{
@@ -158,36 +162,36 @@ class QRCodeReader extends Sprite
 		errorText.background = true;
 		sprite.graphics.lineStyle(0);
 		
-		////var pathCommand:Vector<Int> = new Vector<Int>();
-		////pathCommand[0] = 1;
-		////pathCommand[1] = 2;
-		////pathCommand[2] = 2;
-		////pathCommand[3] = 2;
-		////pathCommand[4] = 2;
-		////pathCommand[5] = 2;
-		////pathCommand[6] = 1;
-		////pathCommand[7] = 2;
-		////
-		////var pathDate:Vector<Float> = new Vector<Float>();
-		////pathDate[0] = 5;
-		////pathDate[1] = 5;
-		////pathDate[2] = STAGE_SIZE-5;
-		////pathDate[3] = 5;
-		////pathDate[4] = STAGE_SIZE-5;
-		////pathDate[5] = STAGE_SIZE-5;
-		////pathDate[6] = 5;
-		////pathDate[7] = STAGE_SIZE-5;
-		////pathDate[8] = 5;
-		////pathDate[9] = 5;
-		////pathDate[10] = STAGE_SIZE-5;
-		////pathDate[11] = STAGE_SIZE-5;
-		////pathDate[12] = 5;
-		////pathDate[13] = STAGE_SIZE-5;
-		////pathDate[14] = STAGE_SIZE-5;
-		////pathDate[15] = 5;
-		//
-		////sprite.graphics.drawPath( pathCommand, pathDate);
-		sprite.graphics.drawRect( 5,5,345,345);
+		var pathCommand:Vector<Int> = new Vector<Int>();
+		pathCommand[0] = 1;
+		pathCommand[1] = 2;
+		pathCommand[2] = 2;
+		pathCommand[3] = 2;
+		pathCommand[4] = 2;
+		pathCommand[5] = 2;
+		pathCommand[6] = 1;
+		pathCommand[7] = 2;
+		
+		var pathDate:Vector<Float> = new Vector<Float>();
+		pathDate[0] = 5;
+		pathDate[1] = 5;
+		pathDate[2] = STAGE_SIZE-5;
+		pathDate[3] = 5;
+		pathDate[4] = STAGE_SIZE-5;
+		pathDate[5] = STAGE_SIZE-5;
+		pathDate[6] = 5;
+		pathDate[7] = STAGE_SIZE-5;
+		pathDate[8] = 5;
+		pathDate[9] = 5;
+		pathDate[10] = STAGE_SIZE-5;
+		pathDate[11] = STAGE_SIZE-5;
+		pathDate[12] = 5;
+		pathDate[13] = STAGE_SIZE-5;
+		pathDate[14] = STAGE_SIZE-5;
+		pathDate[15] = 5;
+		
+		sprite.graphics.drawPath( pathCommand, pathDate);
+		//sprite.graphics.drawRect( 5,5,345,345);
 		sprite.addChild(errorText);
 		return sprite;
 	}
@@ -362,7 +366,7 @@ class QRCodeReader extends Sprite
 		textArray.shift();
 		textArray.push( e.data );  // QRdecoderEvent.data: 解析文字列
 		if ( textArray[0] == textArray[1] && textArray[1] == textArray[2] ) {
-			readCode = e.data;
+			txtCheck = e.data;
 			//textArea.htmlText = e.data;
 			cameraView.filters = [blurFilter];
 			redTimer.stop();
@@ -373,18 +377,18 @@ class QRCodeReader extends Sprite
 			
 			var fileStream:FileStream = new FileStream();
 			
-			var fileDir:File = File.applicationDirectory;
-			var fileReadTarget:File = fileDir.resolvePath("qrcode.txt");
-			
-			fileStream.open(fileReadTarget, FileMode.READ);
-			var txtCode:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
+			var fileTargetOriginal:File = appDir.resolvePath("qrcode.txt");
+			fileStream.open(fileTargetOriginal, FileMode.READ);
+			txtOriginal = fileStream.readUTFBytes(fileStream.bytesAvailable);
 			fileStream.close();
 			
-			if (readCode == txtCode)
+			var strageDir:File = File.applicationStorageDirectory;
+			var fileTargetCheck:File = strageDir.resolvePath("qrcodeCheck.txt");
+			
+			if (txtOriginal == txtCheck)
 			{
-				var fileWriteTarget:File = fileDir.resolvePath("qrcodeCheck.txt");
-				fileStream.open(fileWriteTarget, FileMode.WRITE);
-				fileStream.writeUTFBytes(readCode);
+				fileStream.open(fileTargetCheck, FileMode.WRITE);
+				fileStream.writeUTFBytes(txtCheck);
 				fileStream.close();
 				
 				var e:MouseEvent = new MouseEvent(MouseEvent.CLICK);

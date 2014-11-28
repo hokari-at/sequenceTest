@@ -28,7 +28,7 @@ class SceneSecond extends SceneBase
 {
 
 	private var userName:String = "";
-	private var userEtc:String = "";	
+	private var userEtc:String = "";
 	
 	private var popContainer:DisplayObjectContainer = new Sprite();
 	
@@ -118,16 +118,6 @@ class SceneSecond extends SceneBase
 		Lib.current.addChild(popContainer);
 	}
 	
-	//public function writeString(textVariation:String):Function
-	//{
-		//return function(event:Event):Void
-		//{
-			//textVariation = event.target.text;
-			//
-			//trace (textVariation);
-		//}
-		//
-	//}
 	
 	public function writeUserName(event:Event):Void
 	{
@@ -154,6 +144,7 @@ class SceneSecond extends SceneBase
 			fileStream.writeUTFBytes(userName + "," + userEtc);
 			fileStream.close();
 			
+			//記入確認に使用
 			//fileStream.open(fileTarget, FileMode.READ);
 			//var testTexts:Array<String> = fileStream.readUTFBytes(fileStream.bytesAvailable).split(",");
 			//fileStream.close();

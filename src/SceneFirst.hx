@@ -48,15 +48,7 @@ class SceneFirst extends SceneBase
 		container.x = rectLeftBottom.x;
 		container.y = rectLeftBottom.y;
 		
-			//var buttonA:ButtonBase = new ButtonBase();
-			//var buttonNext:SimpleButton = buttonA.createButtonL();
-			//
-			//buttonNext.x = (tableWidth / 2) - (buttonNext.width / 2);
-			//buttonNext.y = (tableHeight / 2) + 150;
-			//
-			//buttonNext.addEventListener(MouseEvent.CLICK, closeReady);
-			//container.addChild(buttonNext);	
-		
+		//シーンの切り替わりのチェックに使用
 		var buttonB:ButtonBase = new ButtonBase();
 		var buttonCheck:SimpleButton = buttonB.createButtonM();
 		
@@ -66,17 +58,7 @@ class SceneFirst extends SceneBase
 		buttonCheck.addEventListener(MouseEvent.CLICK, dummyCheck);
 		
 		container.addChild(buttonCheck);
-		
-		//var btnText:TextField = new TextField();
-		//btnText.autoSize = TextFieldAutoSize.CENTER;
-		//btnText.text = "Dummy";
-		//btnText.setTextFormat(new TextFormat(null, 12, null, true));
-		//btnText.selectable = false;	
 		//
-		//btnText.x = (tableWidth / 2) - (btnText.width / 2);
-		//btnText.y = (tableHeight / 2) + 110;	
-		//
-		//container.addChild(btnText);
 		
 		container.addEventListener(Event.ENTER_FRAME , checkCode);
 		
@@ -129,6 +111,7 @@ class SceneFirst extends SceneBase
 
 	}
 	
+	//シーンの切り替わりのチェックに使用
 	public function dummyCheck(event:Event)
 	{
 		var strageDir:File = File.applicationStorageDirectory;
@@ -138,4 +121,5 @@ class SceneFirst extends SceneBase
 		fileStream.writeUTFBytes("tonight's gonna be a good night.");
 		fileStream.close();
 	}
+	//
 }
